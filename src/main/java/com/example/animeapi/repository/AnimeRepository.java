@@ -9,4 +9,6 @@ public interface AnimeRepository extends JpaRepository<Anime, Long> {
     List<Anime> findByCategoryContaining(String category);
 
     List<Anime> findByNameContaining(String name);
+
+    List<Anime> findByRatingGreaterThanEqual(float rating);
 }

@@ -31,11 +31,18 @@ public class AnimeService {
         return anime;
     }
 
-    public List<AnimeDTO> getAnimesByCategory(String category) {
-        List<AnimeDTO> exist = repository.findByCategoryContaining(category).stream().map(AnimeDTO::create).
+    public List<AnimeDTO> getAnimesByRating(float rating) {
+        List<AnimeDTO> animes = repository.findByRatingGreaterThanEqual(rating).stream().map(AnimeDTO::create).
                 collect(Collectors.toList());
 
-        return exist;
+        return animes;
+    }
+
+    public List<AnimeDTO> getAnimesByCategory(String category) {
+        List<AnimeDTO> animes = repository.findByCategoryContaining(category).stream().map(AnimeDTO::create).
+                collect(Collectors.toList());
+
+        return animes;
     }
 
     public AnimeDTO create(Anime anime) {

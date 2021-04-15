@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -56,12 +55,21 @@ public class AnimeController {
     }
 
     @GetMapping("name/{name}")
-    public ResponseEntity getAnimeByNome(@PathVariable("name") String name) {
+    public ResponseEntity getAnimesByNome(@PathVariable("name") String name) {
         List<AnimeDTO> list = service.findByName(name);
 
         return list.isEmpty() ?
                 ResponseEntity.noContent().build() :
                 ResponseEntity.ok(list);
+    }
+
+    @GetMapping("rating/{rating}")
+    public ResponseEntity getAnimesByRating(@PathVariable("rating") float rating) {
+        List<AnimeDTO> animes = service.getAnimesByRating(rating);
+
+        return animes.isEmpty() ?
+                ResponseEntity.noContent().build() :
+                ResponseEntity.ok(animes);
     }
 
     //POST
