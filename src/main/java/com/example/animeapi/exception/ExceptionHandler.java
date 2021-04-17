@@ -37,7 +37,7 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
                                                                       HttpStatus status,
                                                                       WebRequest request) {
 
-        return new ResponseEntity<>(new ExceptionError("Operação não permitida"), HttpStatus.METHOD_NOT_ALLOWED);
+        return new ResponseEntity<>(new ExceptionError("Operation not allowed."), HttpStatus.METHOD_NOT_ALLOWED);
 
     }
 
@@ -58,7 +58,7 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
 //            AccessDeniedException.class
 //    })
 //    public ResponseEntity accessDenied() {
-//        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new Error("Acesso negado"));
+//        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new Error("Denied Access"));
 //    }
 //
 //    class Error {

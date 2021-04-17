@@ -29,7 +29,7 @@ public class AnimeService {
     public Optional<AnimeDTO> getAnime(long id) {
         Optional<AnimeDTO> anime = repository.findById(id).map(AnimeDTO::create);
 
-        return Optional.ofNullable(anime.orElseThrow(() -> new ObjectNotFoundException("Carro não encontrado.")));
+        return Optional.ofNullable(anime.orElseThrow(() -> new ObjectNotFoundException("Anime not found.")));
     }
 
     public List<AnimeDTO> getAnimesByRating(float rating) {
