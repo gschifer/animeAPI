@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
-class AnimesServiceTest {
+class AnimeServiceTest {
     @Autowired
     private AnimeService service;
 

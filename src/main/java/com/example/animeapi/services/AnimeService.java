@@ -2,6 +2,7 @@ package com.example.animeapi.services;
 
 import com.example.animeapi.domain.dto.AnimeDTO;
 import com.example.animeapi.domain.entities.Anime;
+import com.example.animeapi.exception.ObjectNotFoundException;
 import com.example.animeapi.repository.AnimeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ public class AnimeService {
     public Optional<AnimeDTO> getAnime(long id) {
         Optional<AnimeDTO> anime = repository.findById(id).map(AnimeDTO::create);
 
-        return anime;
+        return Optional.ofNullable(anime.orElseThrow(() -> new ObjectNotFoundException("Carro não encontrado.")));
     }
 
     public List<AnimeDTO> getAnimesByRating(float rating) {
@@ -71,14 +72,8 @@ public class AnimeService {
         return null;
     }
 
-    public Optional<AnimeDTO> delete(long id) {
-        Optional<AnimeDTO> anime = getAnime(id);
-
-        if (anime.isPresent()) {
-            repository.deleteById(id);
-        }
-
-        return anime;
+    public void delete(long id) {
+        repository.deleteById(id);
     }
 
     public void deleteAll() {

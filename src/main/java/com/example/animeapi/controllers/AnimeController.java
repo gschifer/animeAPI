@@ -40,9 +40,7 @@ public class AnimeController {
     public ResponseEntity getAnime(@PathVariable("id") long id) {
         Optional<AnimeDTO> anime = service.getAnime(id);
 
-        return anime.isPresent() ?
-                ResponseEntity.ok(anime) :
-                ResponseEntity.notFound().build();
+        return ResponseEntity.ok(anime);
     }
 
     @GetMapping("category/{category}")
@@ -75,14 +73,10 @@ public class AnimeController {
     //POST
     @PostMapping
     public ResponseEntity create(@RequestBody Anime anime) {
-        try {
-            AnimeDTO anm = service.create(anime);
-            URI location = getUri(anm.getId());
+            AnimeDTO an = service.create(anime);
+            URI location = getUri(an.getId());
 
             return ResponseEntity.created(location).build();
-        } catch (IllegalArgumentException exception) {
-            return ResponseEntity.badRequest().build();
-        }
     }
 
     private URI getUri(Long id) {
@@ -103,11 +97,9 @@ public class AnimeController {
     //DELETE
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable("id") long id) {
-        Optional<AnimeDTO> anime = service.delete(id);
+        service.delete(id);
 
-        return anime.isPresent() ?
-                ResponseEntity.ok(anime) :
-                ResponseEntity.notFound().build();
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping
