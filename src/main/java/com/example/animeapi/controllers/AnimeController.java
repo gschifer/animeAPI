@@ -5,6 +5,7 @@ import com.example.animeapi.domain.entities.Anime;
 import com.example.animeapi.services.AnimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
@@ -71,6 +72,7 @@ public class AnimeController {
     }
 
     //POST
+    @Secured({"ROLE_ADMIN"})
     @PostMapping
     public ResponseEntity create(@RequestBody Anime anime) {
             AnimeDTO an = service.create(anime);

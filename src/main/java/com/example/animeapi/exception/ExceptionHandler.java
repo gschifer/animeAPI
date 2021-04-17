@@ -4,6 +4,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -49,23 +50,25 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
             this.error = error;
         }
 
+        //Needed to show the msg in the response field
         public String getError() {
             return error;
         }
     }
 
-//    @org.springframework.web.bind.annotation.ExceptionHandler({
-//            AccessDeniedException.class
-//    })
-//    public ResponseEntity accessDenied() {
-//        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new Error("Denied Access"));
-//    }
-//
-//    class Error {
-//        public String error;
-//
-//        public Error(String error) {
-//            this.error = error;
-//        }
-//    }
+    //Error Handling for requests that are not allowed such as POST for users, admins are permitted
+    @org.springframework.web.bind.annotation.ExceptionHandler({
+            AccessDeniedException.class
+    })
+    public ResponseEntity accessDenied() {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new Error("Denied Access"));
+    }
+
+    class Error {
+        public String error;
+
+        public Error(String error) {
+            this.error = error;
+        }
+    }
 }
