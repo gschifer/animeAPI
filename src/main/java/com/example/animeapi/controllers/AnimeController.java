@@ -87,6 +87,7 @@ public class AnimeController {
     }
 
     //PUT
+    @Secured({"ROLE_ADMIN"})
     @PutMapping("/{id}")
     public ResponseEntity update(@RequestBody Anime anime, @PathVariable("id") long id) {
         AnimeDTO existingAnime = service.update(anime, id);
@@ -97,6 +98,7 @@ public class AnimeController {
     }
 
     //DELETE
+    @Secured({"ROLE_ADMIN"})
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable("id") long id) {
         service.delete(id);
@@ -104,6 +106,7 @@ public class AnimeController {
         return ResponseEntity.ok().build();
     }
 
+    @Secured({"ROLE_ADMIN"})
     @DeleteMapping
     public ResponseEntity deleteAll() {
         service.deleteAll();
