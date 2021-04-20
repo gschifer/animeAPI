@@ -6,7 +6,7 @@ import org.modelmapper.ModelMapper;
 
 @Data
 public class AnimeDTO {
-    private long id;
+    private Long id;
     private String name;
     private String category;
     private String description;

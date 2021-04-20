@@ -18,11 +18,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 //  It's always a good practice to use the generic type which is the UserDetailsService interface
-//  In this case the IDE is not finding any other UserDetailsService which normally it'll cause a conflict
-//  Hence, we don't need to use the example below, but I will leave as commented
-//  In @Service of UserDetailsServiceImpl, just use as @Service(value = "userDetailsServiceImpl") to be able to identify
-
-    //    @Qualifier("userDetailsServiceImpl")
     @Autowired
     @Qualifier("userDetailsServiceImpl")
     private UserDetailsService userDetailsService;

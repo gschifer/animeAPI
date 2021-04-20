@@ -1,0 +1,3 @@
+INSERT INTO user(email,name,password,login) VALUES('user@hotmail.com', 'user', '$2a$10$HKveMsPlst41Ie2LQgpijO691lUtZ8cLfcliAO1DD9TtZxEpaEoJe', 'user')
+INSERT INTO user(email,name,password,login) VALUES('admin@hotmail.com', 'admin', '$2a$10$HKveMsPlst41Ie2LQgpijO691lUtZ8cLfcliAO1DD9TtZxEpaEoJe', 'admin')
+

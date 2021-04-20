@@ -8,6 +8,8 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
+//Needed to implement UserDetails, cause at UserDetailsServiceImpl it returns a UserDetails type and also the methods
+//from userDetails are needed to be show in the response field
 @Entity
 @Data
 public class User implements UserDetails {
