@@ -2,6 +2,7 @@ package com.example.animeapi;
 
 import com.example.animeapi.domain.dto.AnimeDTO;
 import com.example.animeapi.domain.entities.Anime;
+import com.example.animeapi.exception.ObjectNotFoundException;
 import com.example.animeapi.services.AnimeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ class AnimeServiceTest {
         service.delete(id);
 
         //Check if the object was deleted indeed
-        assertFalse(service.getAnime(id).isPresent());
+        assertThrows(ObjectNotFoundException.class, () -> {service.getAnime(id);});
 
     }
 
@@ -60,7 +61,7 @@ class AnimeServiceTest {
     public void testlist() {
         List<AnimeDTO> list = service.getAnimes();
         assertFalse(list.isEmpty());
-        assertEquals(5, list.size());
+        assertEquals(10, list.size());
     }
 
     @Test

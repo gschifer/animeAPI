@@ -25,14 +25,14 @@ public class AnimeAPITest {
 
     @Autowired
     protected TestRestTemplate rest;
-    private static final String URL = "http://localhost:8081/api/v1/animes/";
+    private static final String URL = "http://localhost:8080/api/v1/animes/";
 
     private ResponseEntity<AnimeDTO> getAnime(String url) {
-        return rest.getForEntity(url, AnimeDTO.class);
+        return rest.withBasicAuth("user","123").getForEntity(url, AnimeDTO.class);
     }
 
     private ResponseEntity<List<AnimeDTO>> getAnimes(String url) {
-        return rest.exchange(
+        return rest.withBasicAuth("user","123").exchange(
                 url,
                 HttpMethod.GET,
                 null,
@@ -90,7 +90,7 @@ public class AnimeAPITest {
         anime.setRating(100F);
 
         // Insert
-        ResponseEntity response = rest.
+        ResponseEntity response = rest.withBasicAuth("admin","123").
                 postForEntity(URL, anime, null);
         System.out.println(response);
 
@@ -107,7 +107,7 @@ public class AnimeAPITest {
         assertEquals(100F, an.getRating());
 
         // Delete the object
-        rest.delete(location);
+        rest.withBasicAuth("admin","123").delete(location);
 
         // Check if it was deleted
         assertEquals(HttpStatus.NOT_FOUND, getAnime(location).getStatusCode());
