@@ -23,8 +23,8 @@ public class AnimeService {
         return animes;
     }
 
-    public List<Anime> getAnimesAll() {
-        return repository.findAll();
+    public List<Anime> getAnimesAll(Pageable pageable) {
+        return repository.findAll(pageable).toList();
     }
 
     public Optional<AnimeDTO> getAnime(long id) {
@@ -34,15 +34,15 @@ public class AnimeService {
                 () -> new ObjectNotFoundException("Anime with the ID " + id + " was not found."  )));
     }
 
-    public List<AnimeDTO> getAnimesByRating(float rating) {
-        List<AnimeDTO> animes = repository.findByRatingGreaterThanEqual(rating).stream().map(AnimeDTO::create).
+    public List<AnimeDTO> getAnimesByRating(float rating, Pageable pageable) {
+        List<AnimeDTO> animes = repository.findByRatingGreaterThanEqual(rating, pageable).stream().map(AnimeDTO::create).
                 collect(Collectors.toList());
 
         return animes;
     }
 
-    public List<AnimeDTO> getAnimesByCategory(String category) {
-        List<AnimeDTO> animes = repository.findByCategoryContaining(category).stream().map(AnimeDTO::create).
+    public List<AnimeDTO> getAnimesByCategory(String category, Pageable pageable) {
+        List<AnimeDTO> animes = repository.findByCategoryContaining(category, pageable).stream().map(AnimeDTO::create).
                 collect(Collectors.toList());
 
         return animes;

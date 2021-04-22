@@ -31,8 +31,9 @@ public class AnimeController {
                 ResponseEntity.ok(animes);
     }
     @GetMapping("/all")
-    public ResponseEntity getAll() {
-        List<Anime> animes = service.getAnimesAll();
+    public ResponseEntity getAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                                 @RequestParam(value = "size", defaultValue = "10") Integer size) {
+        List<Anime> animes = service.getAnimesAll(PageRequest.of(page, size));
 
         return animes.isEmpty() ?
                 ResponseEntity.noContent().build() :
@@ -47,8 +48,10 @@ public class AnimeController {
     }
 
     @GetMapping("category/{category}")
-    public ResponseEntity getAnimesByCategory(@PathVariable("category") String category) {
-        List<AnimeDTO> list = service.getAnimesByCategory(category);
+    public ResponseEntity getAnimesByCategory(@PathVariable("category") String category,
+                                              @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                              @RequestParam(value = "size", defaultValue = "10") Integer size) {
+        List<AnimeDTO> list = service.getAnimesByCategory(category, PageRequest.of(page, size));
 
         return list.isEmpty() ?
                 ResponseEntity.noContent().build() :
@@ -65,8 +68,10 @@ public class AnimeController {
     }
 
     @GetMapping("rating/{rating}")
-    public ResponseEntity getAnimesByRating(@PathVariable("rating") float rating) {
-        List<AnimeDTO> animes = service.getAnimesByRating(rating);
+    public ResponseEntity getAnimesByRating(@PathVariable("rating") float rating,
+                                            @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                            @RequestParam(value = "size", defaultValue = "10") Integer size) {
+        List<AnimeDTO> animes = service.getAnimesByRating(rating, PageRequest.of(page, size));
 
         return animes.isEmpty() ?
                 ResponseEntity.noContent().build():
