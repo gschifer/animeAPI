@@ -5,6 +5,7 @@ import com.example.animeapi.domain.entities.Anime;
 import com.example.animeapi.exception.ObjectNotFoundException;
 import com.example.animeapi.repository.AnimeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -17,8 +18,8 @@ public class AnimeService {
     @Autowired
     AnimeRepository repository;
 
-    public List<AnimeDTO> getAnimes() {
-        List<AnimeDTO> animes = repository.findAll().stream().map(AnimeDTO::create).collect(Collectors.toList());
+    public List<AnimeDTO> getAnimes(Pageable pageable) {
+        List<AnimeDTO> animes = repository.findAll(pageable).stream().map(AnimeDTO::create).collect(Collectors.toList());
         return animes;
     }
 

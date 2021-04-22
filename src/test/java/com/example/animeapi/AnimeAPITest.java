@@ -57,9 +57,9 @@ public class AnimeAPITest {
     @Test
     public void testListByRating() {
         List<AnimeDTO> animes = getAnimes(URL + "/rating/90").getBody();
-        assertEquals(3, animes.size());
-        assertEquals(8, getAnimes(URL + "/rating/85").getBody().size());
-        assertEquals(10, getAnimes(URL + "/rating/80").getBody().size());
+        assertEquals(4, animes.size());
+        assertEquals(10, getAnimes(URL + "/rating/85").getBody().size());
+        assertEquals(14, getAnimes(URL + "/rating/80").getBody().size());
     }
 
     @Test
@@ -78,7 +78,7 @@ public class AnimeAPITest {
     @Test
     public void testNotFound() {
         assertEquals(HttpStatus.NOT_FOUND, getAnime(URL + "89").getStatusCode());
-        assertEquals(HttpStatus.NOT_FOUND, getAnime(URL + "11").getStatusCode());
+        assertEquals(HttpStatus.NOT_FOUND, getAnime(URL + "50").getStatusCode());
 
     }
 

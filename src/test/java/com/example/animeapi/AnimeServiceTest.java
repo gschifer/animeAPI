@@ -7,6 +7,7 @@ import com.example.animeapi.services.AnimeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.util.Assert;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -59,14 +60,14 @@ class AnimeServiceTest {
 
     @Test
     public void testlist() {
-        List<AnimeDTO> list = service.getAnimes();
+        List<AnimeDTO> list = service.getAnimes(PageRequest.of(0, 10));
         assertFalse(list.isEmpty());
         assertEquals(10, list.size());
     }
 
     @Test
     public void testGet() {
-        for (int i = 1; i <= service.getAnimes().size(); i++) {
+        for (int i = 1; i <= service.getAnimes(PageRequest.of(0, 10)).size(); i++) {
             assertTrue(service.getAnime(i).isPresent());
         }
 

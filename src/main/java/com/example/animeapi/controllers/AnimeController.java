@@ -4,6 +4,7 @@ import com.example.animeapi.domain.dto.AnimeDTO;
 import com.example.animeapi.domain.entities.Anime;
 import com.example.animeapi.services.AnimeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -19,15 +20,16 @@ public class AnimeController {
     AnimeService service;
 
     //GET
+    //http://localhost:8080/api/v1/animes?page=1&size=3
     @GetMapping
-    public ResponseEntity get() {
-        List<AnimeDTO> animes = service.getAnimes();
+    public ResponseEntity get(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                              @RequestParam(value = "size", defaultValue = "10") Integer size) {
+        List<AnimeDTO> animes = service.getAnimes(PageRequest.of(page, size));
 
         return animes.isEmpty() ?
                 ResponseEntity.noContent().build() :
                 ResponseEntity.ok(animes);
     }
-
     @GetMapping("/all")
     public ResponseEntity getAll() {
         List<Anime> animes = service.getAnimesAll();
@@ -67,7 +69,7 @@ public class AnimeController {
         List<AnimeDTO> animes = service.getAnimesByRating(rating);
 
         return animes.isEmpty() ?
-                ResponseEntity.noContent().build() :
+                ResponseEntity.noContent().build():
                 ResponseEntity.ok(animes);
     }
 

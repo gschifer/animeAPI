@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.io.Serializable;
-
 @RestControllerAdvice
 public class ExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -54,19 +52,6 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
                 new ExceptionError("Denied access, you don't have permission to do such a thing."));
     }
 
-    //Shows the message in JSON in the response field
-    class ExceptionError implements Serializable {
-        private String error;
-
-        ExceptionError(String error) {
-            this.error = error;
-        }
-
-        //Needed to show the msg in the response field
-        public String getError() {
-            return error;
-        }
-    }
 //    class Error {
 //        public String error;
 //
