@@ -20,7 +20,8 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
             EmptyResultDataAccessException.class
     })
     public ResponseEntity errorNotFound() {
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                new ExceptionError("This ID doesn't exist in our data to be removed."));
     }
 
     //Error Handling for invalid arguments such as ID in a POST method
@@ -28,7 +29,8 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
             IllegalArgumentException.class
     })
     public ResponseEntity errorBadRequest() {
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                new ExceptionError("You cannot pass an ID as an argument, remove it."));
     }
 
     //Error Handling for invalid HTTP methods such as POST in an URL like this: http://localhost:8081/api/v1/animes/30
@@ -40,6 +42,16 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(new ExceptionError("Operation not allowed."), HttpStatus.METHOD_NOT_ALLOWED);
 
+    }
+
+
+    //Error Handling for requests that are not allowed such as POST for users, admins are permitted
+    @org.springframework.web.bind.annotation.ExceptionHandler({
+            AccessDeniedException.class
+    })
+    public ResponseEntity accessDenied() {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(
+                new ExceptionError("Denied access, you don't have permission to do such a thing."));
     }
 
     //Shows the message in JSON in the response field
@@ -55,20 +67,11 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
             return error;
         }
     }
-
-    //Error Handling for requests that are not allowed such as POST for users, admins are permitted
-    @org.springframework.web.bind.annotation.ExceptionHandler({
-            AccessDeniedException.class
-    })
-    public ResponseEntity accessDenied() {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new Error("Denied Access"));
-    }
-
-    class Error {
-        public String error;
-
-        public Error(String error) {
-            this.error = error;
-        }
-    }
+//    class Error {
+//        public String error;
+//
+//        public Error(String error) {
+//            this.error = error;
+//        }
+//    }
 }
